@@ -57,7 +57,7 @@ export default function SettingUpScreen() {
     }, 2000);
 
     const timeout = setTimeout(() => {
-      router.replace("/(home)" as any);
+      router.replace("/(onboarding)/welcome-journey" as any);
     }, 7000);
 
     return () => {

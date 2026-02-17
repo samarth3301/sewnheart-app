@@ -14,6 +14,8 @@ const PROGRESS_MAP: Record<string, number> = {
   "breakup-reason": 0.85,
   "terms-and-conditions": 1.0,
   "setting-up": 1.0,
+  "welcome-journey": 1.0,
+  transition: 1.0,
 };
 
 export default function OnboardingLayout() {
@@ -24,15 +26,21 @@ export default function OnboardingLayout() {
   const currentSegment = segments[segments.length - 1] || "(onboarding)";
   const progress = PROGRESS_MAP[currentSegment] || 0.1;
 
+  // Hide progress bar on the welcome and transition screens
+  const showProgress =
+    currentSegment !== "welcome-journey" && currentSegment !== "transition";
+
   return (
     <View style={styles.container}>
       {/* 
         We put the ProgressBar inside a SafeAreaView container 
         to ensure it's always at the top but below the notch 
       */}
-      <SafeAreaView edges={["top"]} style={styles.safeArea}>
-        <ProgressBar progress={progress} />
-      </SafeAreaView>
+      {showProgress && (
+        <SafeAreaView edges={["top"]} style={styles.safeArea}>
+          <ProgressBar progress={progress} />
+        </SafeAreaView>
+      )}
 
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
@@ -45,6 +53,8 @@ export default function OnboardingLayout() {
         <Stack.Screen name="breakup-reason" />
         <Stack.Screen name="terms-and-conditions" />
         <Stack.Screen name="setting-up" />
+        <Stack.Screen name="welcome-journey" />
+        <Stack.Screen name="transition" />
       </Stack>
     </View>
   );
